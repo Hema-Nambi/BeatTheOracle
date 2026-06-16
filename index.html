@@ -844,22 +844,51 @@ function formToString(form){
   return form.map(f=>`${f.r} ${f.tf}–${f.of} vs ${f.opp} (${f.d})`).join(' | ');
 }
 
+// ── Demo matches fallback ─────────────────────────────────────────────────
+function getDemoMatches(){
+  const now=new Date();
+  const yesterday=new Date(now); yesterday.setDate(now.getDate()-1);
+  const tomorrow=new Date(now);  tomorrow.setDate(now.getDate()+1);
+  const dayafter=new Date(now);  dayafter.setDate(now.getDate()+2);
+  const fmt=d=>d.toISOString();
+  return [
+    {id:'demo-1',homeTeam:{name:'Canada',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/can.png'},awayTeam:{name:'Morocco',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/mar.png'},utcDate:fmt(yesterday),status:'FINISHED',score:{fullTime:{home:1,away:0}}},
+    {id:'demo-2',homeTeam:{name:'Brazil',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/bra.png'},awayTeam:{name:'Spain',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/esp.png'},utcDate:fmt(yesterday),status:'FINISHED',score:{fullTime:{home:2,away:1}}},
+    {id:'demo-3',homeTeam:{name:'France',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/fra.png'},awayTeam:{name:'Argentina',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/arg.png'},utcDate:fmt(yesterday),status:'FINISHED',score:{fullTime:{home:1,away:2}}},
+    {id:'demo-4',homeTeam:{name:'USA',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/usa.png'},awayTeam:{name:'England',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/eng.png'},utcDate:fmt(tomorrow),status:'SCHEDULED',score:{fullTime:{home:null,away:null}}},
+    {id:'demo-5',homeTeam:{name:'Germany',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/ger.png'},awayTeam:{name:'Portugal',logo:'https://a.espncdn.com/i/teamlogos/soccer/500/por.png'},utcDate:fmt(dayafter),status:'SCHEDULED',score:{fullTime:{home:null,away:null}}},
+  ];
+}
+
 // ── ESPN fetch ────────────────────────────────────────────────────────────
+const ESPN_SLUGS = ['fifa.world','fifa.world.2026','fifa.worldcup'];
+
 async function fetchMatches(){
   const today=new Date();
   const offsets=[-1,0,1,2,3,4,5,6];
   let all=[];
-  for(const o of offsets){
-    const d=new Date(today);d.setDate(d.getDate()+o);
-    const ds=d.toISOString().slice(0,10).replace(/-/g,'');
-    try{
-      const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=${ds}`);
-      if(!r.ok) continue;
-      const data=await r.json();
-      all.push(...(data.events||[]));
-    }catch(_){}
+
+  for(const slug of ESPN_SLUGS){
+    if(all.length) break;
+    for(const o of offsets){
+      const d=new Date(today);d.setDate(d.getDate()+o);
+      const ds=d.toISOString().slice(0,10).replace(/-/g,'');
+      try{
+        const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/scoreboard?dates=${ds}`);
+        if(!r.ok) continue;
+        const data=await r.json();
+        const events=data.events||[];
+        if(events.length) console.log(`✅ ESPN slug "${slug}" returned ${events.length} events for ${ds}`);
+        all.push(...events);
+      }catch(e){ console.warn(`ESPN fetch failed for slug ${slug} date ${ds}:`,e); }
+    }
   }
-  if(!all.length) throw new Error('No World Cup 2026 fixtures found. ESPN API may be temporarily unavailable — please try again.');
+
+  // Fallback: demo matches so the game is always playable
+  if(!all.length){
+    console.warn('ESPN API returned no events — using demo matches');
+    return getDemoMatches();
+  }
   return all
     .filter(e=>e.competitions?.[0]?.competitors?.length>=2)
     .map(e=>{
