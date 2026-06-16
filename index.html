@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beat the Oracle ⚽🔮 — FIFA World Cup 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #f5a623;
+      --gold-light: #ffc85a;
+      --dark: #08080f;
+      --dark2: #0f0f1a;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.15);
+      --text: #f0f0ff;
+      --muted: #6b7280;
+      --green: #10d9a0;
+      --green-dim: rgba(16,217,160,0.12);
+      --blue: #4f8ef7;
+      --purple: #9b6dff;
+      --purple-dim: rgba(155,109,255,0.12);
+      --red: #f75f5f;
+      --red-dim: rgba(247,95,95,0.12);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--dark);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* ── Animated background ── */
+    body::before{
+      content:'';
+      position:fixed;inset:0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(155,109,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 110%, rgba(245,166,35,0.08) 0%, transparent 60%);
+      pointer-events:none;z-index:0;
+    }
+
+    /* ── Header ── */
+    header{
+      position:relative;z-index:1;
+      background:linear-gradient(135deg,#08080f 0%,#1a0a2e 50%,#08080f 100%);
+      border-bottom:2px solid var(--gold);
+      padding:28px 20px 22px;
+      text-align:center;
+      overflow:hidden;
+    }
+    header::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(245,166,35,0.18) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    header h1{
+      font-size:clamp(1.8rem,5vw,2.8rem);
+      font-weight:900;letter-spacing:-0.5px;
+      position:relative;
+    }
+    header h1 .oracle{color:var(--gold);}
+    header p{color:var(--muted);margin-top:8px;font-size:0.95rem;position:relative;}
+    header p em{color:var(--gold);font-style:normal;font-weight:600;}
+
+    /* ── Screens ── */
+    .screen{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:32px 16px;}
+
+    /* ── Glass card ── */
+    .glass{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      transition:border-color 0.2s;
+    }
+    .glass:hover{border-color:var(--border-hover);}
+
+    /* ── Turing intro ── */
+    #turing-intro .glass{border-color:rgba(155,109,255,0.3);text-align:center;}
+    .turing-icon{
+      width:72px;height:72px;
+      background:linear-gradient(135deg,var(--purple),#6f42c1);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:2rem;margin:0 auto 20px;
+      box-shadow:0 0 40px rgba(155,109,255,0.3);
+    }
+    .turing-quote{
+      background:rgba(155,109,255,0.08);
+      border-left:3px solid var(--purple);
+      border-radius:0 10px 10px 0;
+      padding:14px 16px;margin:16px 0;
+      text-align:left;font-size:0.9rem;
+      color:var(--muted);line-height:1.7;
+    }
+    .turing-quote strong{color:var(--text);}
+    .challenge-text{
+      font-size:1.05rem;font-weight:700;
+      color:var(--gold);margin:16px 0 24px;line-height:1.6;
+    }
+
+    /* ── Setup ── */
+    #setup .glass h2{font-size:1.15rem;font-weight:700;color:var(--gold);margin-bottom:4px;}
+    #setup .glass p.sub{font-size:0.82rem;color:var(--muted);margin-bottom:20px;}
+    .field{margin-bottom:16px;}
+    .field label{
+      display:flex;align-items:center;gap:8px;
+      font-size:0.82rem;font-weight:600;color:var(--muted);
+      margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;
+    }
+    .free-tag{
+      background:rgba(16,217,160,0.15);border:1px solid rgba(16,217,160,0.3);
+      color:var(--green);font-size:0.65rem;font-weight:700;
+      padding:2px 7px;border-radius:20px;letter-spacing:0.5px;
+    }
+    input[type=text],input[type=password]{
+      width:100%;background:rgba(0,0,0,0.3);
+      border:1px solid var(--border);border-radius:12px;
+      padding:12px 16px;color:var(--text);
+      font-size:0.95rem;font-family:'Inter',sans-serif;
+      transition:border-color 0.2s,box-shadow 0.2s;
+    }
+    input:focus{
+      outline:none;border-color:var(--gold);
+      box-shadow:0 0 0 3px rgba(245,166,35,0.1);
+    }
+    .hint{font-size:0.75rem;color:var(--muted);margin-top:6px;line-height:1.5;}
+    .hint a{color:var(--blue);text-decoration:none;}
+    .hint a:hover{text-decoration:underline;}
+
+    /* ── Buttons ── */
+    .btn{
+      cursor:pointer;border:none;border-radius:12px;
+      font-family:'Inter',sans-serif;font-weight:700;
+      transition:all 0.15s;display:inline-flex;align-items:center;
+      justify-content:center;gap:8px;
+    }
+    .btn-gold{
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:#000;padding:14px 24px;font-size:1rem;width:100%;
+    }
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,166,35,0.3);}
+    .btn-gold:active{transform:translateY(0);}
+    .btn-gold:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+    .btn-blue{
+      background:linear-gradient(135deg,#4f8ef7,#7b6ef7);
+      color:#fff;padding:14px 24px;font-size:0.95rem;width:100%;
+    }
+    .btn-blue:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,142,247,0.3);}
+    .btn-outline{
+      background:transparent;border:1px solid var(--border);
+      color:var(--text);padding:14px 24px;font-size:0.95rem;width:100%;
+    }
+    .btn-outline:hover{border-color:var(--border-hover);background:rgba(255,255,255,0.04);}
+
+    /* ── Error ── */
+    .error-box{
+      display:none;background:var(--red-dim);
+      border:1px solid rgba(247,95,95,0.3);border-radius:10px;
+      padding:12px 16px;color:var(--red);
+      font-size:0.85rem;margin-top:12px;line-height:1.5;
+    }
+
+    /* ── Loading ── */
+    #loading{text-align:center;padding:80px 24px;}
+    .loader{
+      width:56px;height:56px;
+      border:3px solid rgba(255,255,255,0.06);
+      border-top-color:var(--gold);
+      border-radius:50%;animation:spin 0.9s linear infinite;
+      margin:0 auto 20px;
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .loading-text{color:var(--muted);font-size:0.9rem;}
+    .loading-sub{color:rgba(255,255,255,0.2);font-size:0.78rem;margin-top:6px;}
+
+    /* ── Game ── */
+    #game{display:none;max-width:700px;margin:0 auto;padding:24px 16px;position:relative;z-index:1;}
+
+    /* Scoreboard */
+    .scoreboard{
+      display:grid;grid-template-columns:1fr auto 1fr;
+      align-items:center;gap:12px;margin-bottom:20px;
+    }
+    .score-panel{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:16px;padding:16px 12px;text-align:center;
+      transition:all 0.3s;
+    }
+    .score-panel.leading{
+      border-color:currentColor;
+      box-shadow:0 0 20px currentColor;
+    }
+    .score-panel .s-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .score-panel .s-pts{font-size:2.6rem;font-weight:900;line-height:1;transition:all 0.4s;}
+    .score-panel .s-name{font-size:0.75rem;color:var(--muted);margin-top:4px;}
+    .you-panel{color:var(--green);}
+    .you-panel .s-pts{color:var(--green);}
+    .oracle-panel{color:var(--purple);}
+    .oracle-panel .s-pts{color:var(--purple);}
+    .vs-divider{
+      font-size:0.75rem;font-weight:700;color:var(--muted);
+      text-transform:uppercase;letter-spacing:1px;text-align:center;
+    }
+
+    /* Progress */
+    .progress-wrap{
+      height:3px;background:rgba(255,255,255,0.05);
+      border-radius:2px;margin-bottom:24px;overflow:hidden;
+    }
+    .progress-fill{
+      height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));
+      border-radius:2px;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* Match card */
+    .match-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:24px;overflow:hidden;margin-bottom:20px;
+      animation:slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+    .match-header{
+      padding:14px 20px;
+      background:rgba(255,255,255,0.02);
+      border-bottom:1px solid var(--border);
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .match-badge{
+      font-size:0.72rem;font-weight:600;color:var(--muted);
+      display:flex;align-items:center;gap:6px;
+    }
+    .status-dot{
+      width:6px;height:6px;border-radius:50%;background:var(--muted);
+    }
+    .status-dot.live{background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 1.5s infinite;}
+    .status-dot.finished{background:var(--blue);}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+    .match-num{font-size:0.72rem;font-weight:600;color:var(--muted);}
+
+    /* Teams area */
+    .teams-area{
+      display:grid;grid-template-columns:1fr 80px 1fr;
+      align-items:stretch;min-height:160px;
+    }
+    .team-side{
+      display:flex;flex-direction:column;align-items:center;
+      justify-content:center;padding:24px 16px;gap:8px;
+      position:relative;
+    }
+    .team-side.home{
+      background:linear-gradient(135deg,rgba(79,142,247,0.06) 0%,transparent 100%);
+    }
+    .team-side.away{
+      background:linear-gradient(225deg,rgba(155,109,255,0.06) 0%,transparent 100%);
+    }
+    .team-logo{
+      width:64px;height:64px;object-fit:contain;
+      filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    }
+    .team-flag{font-size:3rem;line-height:1;}
+    .team-name{
+      font-size:0.9rem;font-weight:700;text-align:center;line-height:1.3;
+    }
+    .team-role{font-size:0.7rem;color:var(--muted);}
+    .form-badges{margin-top:4px;display:flex;gap:3px;justify-content:center;flex-wrap:wrap;}
+    .fbadge{
+      font-size:0.62rem;font-weight:800;
+      padding:2px 6px;border-radius:4px;
+      letter-spacing:0.3px;
+    }
+    .fbadge.w{background:rgba(16,217,160,0.2);color:var(--green);}
+    .fbadge.l{background:rgba(247,95,95,0.2);color:var(--red);}
+    .fbadge.d{background:rgba(245,166,35,0.2);color:var(--gold);}
+    .fbadge.none{color:var(--muted);font-size:0.65rem;font-weight:400;}
+
+    .vs-col{
+      display:flex;flex-direction:column;align-items:center;
+      justify-content:center;gap:6px;
+      border-left:1px solid var(--border);
+      border-right:1px solid var(--border);
+    }
+    .vs-text{font-size:0.75rem;font-weight:800;color:var(--muted);letter-spacing:2px;}
+
+    /* Played note */
+    .played-note{
+      margin:0 20px;
+      background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);
+      border-radius:10px;padding:10px 14px;
+      font-size:0.8rem;color:var(--gold);text-align:center;
+      margin-top:16px;
+    }
+
+    /* Score steppers */
+    .predict-section{padding:20px;}
+    .predict-label{
+      font-size:0.72rem;font-weight:700;color:var(--muted);
+      text-transform:uppercase;letter-spacing:1px;
+      text-align:center;margin-bottom:16px;
+    }
+    .steppers{
+      display:grid;grid-template-columns:1fr 40px 1fr;
+      align-items:center;gap:12px;max-width:320px;margin:0 auto 20px;
+    }
+    .stepper{
+      display:flex;align-items:center;
+      background:rgba(0,0,0,0.3);border:1px solid var(--border);
+      border-radius:14px;overflow:hidden;
+    }
+    .step-btn{
+      background:none;border:none;color:var(--text);
+      font-size:1.4rem;font-weight:300;padding:0 16px;
+      height:64px;cursor:pointer;
+      transition:background 0.15s,color 0.15s;
+      font-family:'Inter',sans-serif;
+      flex-shrink:0;
+    }
+    .step-btn:hover{background:rgba(255,255,255,0.08);}
+    .step-btn:active{background:rgba(255,255,255,0.12);}
+    .step-val{
+      flex:1;text-align:center;
+      font-size:2.2rem;font-weight:900;
+      color:var(--text);line-height:1;
+    }
+    .step-dash{font-size:1.4rem;font-weight:300;color:var(--muted);text-align:center;}
+
+    .btn-lock{
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:#000;padding:14px;font-size:1rem;font-weight:800;
+      width:100%;border-radius:14px;border:none;
+      cursor:pointer;font-family:'Inter',sans-serif;
+      transition:all 0.15s;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .btn-lock:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,166,35,0.35);}
+    .btn-lock:active{transform:translateY(0);}
+    .btn-lock:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+
+    /* Oracle scanning */
+    .oracle-scan{
+      display:none;padding:24px;text-align:center;
+      border-top:1px solid var(--border);
+    }
+    .scan-ring{
+      width:56px;height:56px;margin:0 auto 12px;position:relative;
+    }
+    .scan-ring::before,.scan-ring::after{
+      content:'';position:absolute;inset:0;border-radius:50%;
+      border:2px solid transparent;
+    }
+    .scan-ring::before{
+      border-top-color:var(--purple);
+      animation:spin 1s linear infinite;
+    }
+    .scan-ring::after{
+      border-bottom-color:rgba(155,109,255,0.3);
+      animation:spin 1.5s linear infinite reverse;
+    }
+    .scan-icon{
+      position:absolute;inset:0;display:flex;
+      align-items:center;justify-content:center;font-size:1.3rem;
+    }
+    .scan-text{color:var(--purple);font-size:0.88rem;font-weight:600;}
+    .scan-sub{color:var(--muted);font-size:0.75rem;margin-top:4px;}
+
+    /* Result reveal */
+    .result-reveal{
+      display:none;border-top:1px solid var(--border);padding:20px;
+      animation:slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .actual-result{
+      text-align:center;margin-bottom:16px;
+      font-size:0.85rem;color:var(--muted);
+    }
+    .actual-score{
+      font-size:1.6rem;font-weight:900;color:var(--text);
+      letter-spacing:-0.5px;display:block;margin-top:4px;
+    }
+
+    .pred-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+    .pred-card{
+      border-radius:14px;padding:16px;text-align:center;
+      border:1px solid var(--border);background:rgba(0,0,0,0.2);
+      animation:flipIn 0.5s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .pred-card:nth-child(2){animation-delay:0.15s;}
+    @keyframes flipIn{
+      from{opacity:0;transform:rotateY(-15deg) scale(0.9);}
+      to{opacity:1;transform:rotateY(0) scale(1);}
+    }
+    .pred-card.you{border-color:rgba(16,217,160,0.3);background:var(--green-dim);}
+    .pred-card.oracle{border-color:rgba(155,109,255,0.3);background:var(--purple-dim);}
+    .pred-who{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:var(--muted);}
+    .pred-score{font-size:2rem;font-weight:900;letter-spacing:-0.5px;}
+    .pred-card.you .pred-score{color:var(--green);}
+    .pred-card.oracle .pred-score{color:var(--purple);}
+    .pred-pts{font-size:0.78rem;font-weight:700;margin-top:6px;}
+    .pred-card.you .pred-pts{color:var(--green);}
+    .pred-card.oracle .pred-pts{color:var(--purple);}
+
+    .round-result{
+      text-align:center;padding:12px 16px;border-radius:12px;
+      font-size:0.95rem;font-weight:700;margin-bottom:14px;
+    }
+    .round-result.win{background:var(--green-dim);color:var(--green);border:1px solid rgba(16,217,160,0.3);}
+    .round-result.lose{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(155,109,255,0.3);}
+    .round-result.tie{background:rgba(245,166,35,0.1);color:var(--gold);border:1px solid rgba(245,166,35,0.3);}
+    .round-result.pending{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid var(--border);}
+
+    .enigma-banner{
+      background:linear-gradient(135deg,rgba(245,166,35,0.15),rgba(155,109,255,0.15));
+      border:1px solid rgba(245,166,35,0.4);
+      border-radius:12px;padding:14px 16px;
+      text-align:center;margin-bottom:14px;
+      animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .enigma-banner .e-title{
+      font-size:1rem;font-weight:800;color:var(--gold);margin-bottom:4px;
+    }
+    .enigma-banner .e-sub{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+
+    .oracle-reasoning{
+      background:rgba(155,109,255,0.06);
+      border:1px solid rgba(155,109,255,0.2);
+      border-radius:12px;padding:14px 16px;
+      font-size:0.83rem;color:var(--muted);line-height:1.7;
+      margin-bottom:16px;
+    }
+    .oracle-reasoning strong{color:var(--purple);}
+
+    /* History */
+    #history-section{margin-top:24px;}
+    .history-title{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+    .h-item{
+      background:var(--card);border:1px solid var(--border);border-radius:10px;
+      padding:10px 14px;display:flex;justify-content:space-between;
+      align-items:center;margin-bottom:6px;font-size:0.82rem;
+      flex-wrap:wrap;gap:6px;
+    }
+    .h-match{color:var(--text);font-weight:500;}
+    .h-you{color:var(--green);font-weight:700;}
+    .h-oracle{color:var(--purple);font-weight:700;}
+
+    /* Game Over */
+    #game-over{
+      display:none;position:relative;z-index:1;
+      max-width:540px;margin:0 auto;padding:32px 16px;text-align:center;
+    }
+    .go-emoji{font-size:5rem;margin-bottom:16px;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);}
+    @keyframes popIn{from{transform:scale(0);}to{transform:scale(1);}}
+    .go-title{font-size:2.2rem;font-weight:900;letter-spacing:-1px;margin-bottom:10px;}
+    .go-verdict{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:420px;margin:0 auto 24px;}
+    .go-scores{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;
+    }
+    .go-score-card{
+      border-radius:16px;padding:20px 12px;text-align:center;
+    }
+    .go-score-card.you{background:var(--green-dim);border:1px solid rgba(16,217,160,0.3);}
+    .go-score-card.oracle{background:var(--purple-dim);border:1px solid rgba(155,109,255,0.3);}
+    .go-score-card .gc-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+    .go-score-card .gc-pts{font-size:3rem;font-weight:900;line-height:1;}
+    .go-score-card.you .gc-pts{color:var(--green);}
+    .go-score-card.oracle .gc-pts{color:var(--purple);}
+    .go-quote{
+      font-size:0.78rem;color:rgba(255,255,255,0.2);
+      font-style:italic;margin-bottom:24px;line-height:1.6;
+    }
+
+    /* Countdown */
+    .kickoff-countdown{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      background:rgba(245,166,35,0.07);border:1px solid rgba(245,166,35,0.2);
+      border-radius:10px;padding:10px 14px;margin:0 20px 16px;font-size:0.82rem;
+    }
+    .kickoff-countdown .cd-label{color:var(--muted);}
+    .kickoff-countdown .cd-time{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums;}
+
+    /* Edit prediction button */
+    .btn-edit{
+      background:transparent;border:1px solid var(--border);
+      color:var(--muted);padding:11px 20px;font-size:0.85rem;
+      width:100%;border-radius:12px;font-family:'Inter',sans-serif;
+      cursor:pointer;font-weight:600;margin-top:10px;
+      transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;
+    }
+    .btn-edit:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* Locked prediction pill */
+    .locked-pill{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(16,217,160,0.1);border:1px solid rgba(16,217,160,0.25);
+      color:var(--green);font-size:0.75rem;font-weight:700;
+      padding:4px 12px;border-radius:20px;margin-bottom:12px;
+    }
+
+    /* ── Share card ── */
+    .share-card{
+      background:linear-gradient(135deg,#0f0f1a 0%,#1a0a2e 100%);
+      border:1px solid rgba(245,166,35,0.35);
+      border-radius:16px;padding:20px;margin:20px 0;
+      font-family:'Inter',monospace;
+      text-align:left;
+    }
+    .share-card-header{
+      text-align:center;margin-bottom:14px;
+    }
+    .share-card-header .sc-title{
+      font-size:1rem;font-weight:800;color:var(--gold);
+    }
+    .share-card-header .sc-sub{
+      font-size:0.75rem;color:var(--muted);margin-top:3px;
+    }
+    .share-rows{margin-bottom:14px;}
+    .share-row{
+      display:flex;align-items:center;gap:10px;
+      padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);
+      font-size:0.85rem;
+    }
+    .share-row:last-child{border-bottom:none;}
+    .sr-icon{font-size:1.1rem;width:24px;text-align:center;flex-shrink:0;}
+    .sr-match{flex:1;color:var(--muted);font-size:0.78rem;}
+    .sr-preds{display:flex;gap:4px;align-items:center;}
+    .sr-pred{
+      font-size:0.72rem;font-weight:700;
+      padding:2px 8px;border-radius:6px;
+    }
+    .sr-pred.you{background:var(--green-dim);color:var(--green);}
+    .sr-pred.oracle{background:var(--purple-dim);color:var(--purple);}
+    .sr-pts{font-size:0.72rem;color:var(--muted);margin-left:4px;}
+    .share-footer{
+      display:flex;justify-content:space-between;align-items:center;
+      padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);
+      font-size:0.82rem;
+    }
+    .share-footer .sf-you{color:var(--green);font-weight:800;}
+    .share-footer .sf-oracle{color:var(--purple);font-weight:800;}
+
+    .share-btns{display:flex;gap:10px;margin-top:12px;}
+    .btn-copy{
+      flex:1;background:var(--gold);color:#000;
+      border:none;border-radius:10px;padding:12px;
+      font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;
+      cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;
+    }
+    .btn-copy:hover{background:var(--gold-light);transform:translateY(-1px);}
+    .btn-copy.copied{background:var(--green);color:#000;}
+    .btn-x{
+      flex:1;background:rgba(255,255,255,0.06);color:var(--text);
+      border:1px solid var(--border);border-radius:10px;padding:12px;
+      font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;
+      cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;
+      text-decoration:none;
+    }
+    .btn-x:hover{border-color:var(--border-hover);background:rgba(255,255,255,0.1);}
+
+    /* Canvas confetti */
+    #confetti-canvas{
+      position:fixed;inset:0;pointer-events:none;z-index:999;
+    }
+
+    /* Footer */
+    footer{
+      position:relative;z-index:1;
+      text-align:center;padding:24px 16px;
+      color:rgba(255,255,255,0.2);font-size:0.75rem;
+      border-top:1px solid var(--border);margin-top:32px;
+    }
+    footer a{color:rgba(255,255,255,0.35);text-decoration:none;}
+    footer a:hover{color:var(--gold);}
+
+    @media(max-width:480px){
+      .teams-area{grid-template-columns:1fr 50px 1fr;}
+      .team-logo,.team-flag{width:48px;font-size:2.2rem;}
+      .team-name{font-size:0.78rem;}
+      .steppers{max-width:280px;}
+      .step-val{font-size:1.8rem;}
+      .scoreboard{gap:8px;}
+      .score-panel .s-pts{font-size:2rem;}
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Header -->
+<header>
+  <h1>🔮 Beat the <span class="oracle">Oracle</span> ⚽</h1>
+  <p>Can you out-predict <em>Gemini AI</em> in FIFA World Cup 2026? 🇨🇦</p>
+</header>
+
+<!-- Turing Intro -->
+<div id="turing-intro" class="screen">
+  <div class="glass" style="border-color:rgba(155,109,255,0.3);">
+    <div class="turing-icon">🧠</div>
+    <h2 style="font-size:1.3rem;font-weight:800;color:var(--purple);margin-bottom:12px;">An Ode to Alan Turing</h2>
+    <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;margin-bottom:12px;">
+      In 1950, Alan Turing — the father of modern computing — asked a deceptively simple question:
+    </p>
+    <div class="turing-quote">
+      <strong>"Can a machine think?"</strong><br>
+      He proposed the <strong>Turing Test</strong>: if a human cannot distinguish a machine's behaviour from a human's, the machine has passed.
+    </div>
+    <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;margin:14px 0;">
+      Turing broke the Enigma cipher by finding hidden patterns in noise — the same way our Oracle analyses real World Cup match data to predict outcomes. You bring intuition, passion, lived experience.
+    </p>
+    <p class="challenge-text">
+      "Can an AI predict football better than you?"<br>
+      <span style="font-size:0.85rem;color:var(--muted);font-weight:500;">Every match is a mini Turing Test. Only one wins.</span>
+    </p>
+    <button class="btn-gold btn" onclick="showSetup()">⚽ Accept the Challenge</button>
+  </div>
+</div>
+
+<!-- Setup -->
+<div id="setup" class="screen" style="display:none;">
+  <div class="glass">
+    <h2>⚙️ Quick Setup</h2>
+    <p class="sub">Only your Gemini key needed — match data is free & automatic.</p>
+
+    <div class="field" style="margin-top:20px;">
+      <label>Gemini API Key <span class="free-tag">FREE</span></label>
+      <input type="password" id="gemini-key" placeholder="AIza..." autocomplete="off"/>
+      <p class="hint">
+        1. Visit <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a><br>
+        2. Click <strong style="color:var(--text)">Create API key</strong> → copy → paste above
+      </p>
+    </div>
+
+    <div class="field">
+      <label>Your Nickname</label>
+      <input type="text" id="player-name" placeholder="e.g. CanadaFan2026" maxlength="20"/>
+    </div>
+
+    <div class="error-box" id="error-msg"></div>
+    <button class="btn-gold btn" id="start-btn" onclick="startGame()" style="margin-top:8px;">🚀 Start the Challenge</button>
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="loading" class="screen" style="display:none;text-align:center;padding:80px 16px;">
+  <div class="loader"></div>
+  <p class="loading-text">Loading World Cup 2026 fixtures...</p>
+  <p class="loading-sub">Fetching match data from ESPN</p>
+</div>
+
+<!-- Game -->
+<div id="game">
+
+  <div class="scoreboard">
+    <div class="score-panel you-panel" id="you-panel">
+      <div class="s-label">You</div>
+      <div class="s-pts" id="you-pts">0</div>
+      <div class="s-name" id="you-name-disp">Player</div>
+    </div>
+    <div class="vs-divider">VS</div>
+    <div class="score-panel oracle-panel" id="oracle-panel">
+      <div class="s-label">🔮 Oracle</div>
+      <div class="s-pts" id="oracle-pts">0</div>
+      <div class="s-name">Gemini AI</div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+
+  <div id="match-area"></div>
+
+  <div id="history-section" style="display:none;">
+    <p class="history-title">📋 Round History</p>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<!-- Game Over -->
+<div id="game-over">
+  <div class="go-emoji" id="go-emoji"></div>
+  <h2 class="go-title" id="go-title"></h2>
+  <p class="go-verdict" id="go-verdict"></p>
+  <div class="go-scores">
+    <div class="go-score-card you">
+      <div class="gc-label" id="gc-you-label">You</div>
+      <div class="gc-pts" id="gc-you-pts">0</div>
+    </div>
+    <div class="go-score-card oracle">
+      <div class="gc-label">🔮 Oracle</div>
+      <div class="gc-pts" id="gc-oracle-pts">0</div>
+    </div>
+  </div>
+  <div id="share-card-wrap"></div>
+  <p class="go-quote">"We can only see a short distance ahead, but we can see plenty there that needs to be done." — Alan Turing, 1950</p>
+  <button class="btn-gold btn" onclick="location.reload()">🔄 Play Again</button>
+</div>
+
+<footer>
+  Built for the <a href="https://dev.to/challenges/june-game-jam-2026-06-03" target="_blank">June Solstice Game Jam 2026</a> ·
+  Powered by <a href="https://aistudio.google.com" target="_blank">Google Gemini</a> ·
+  Data: ESPN · 🇨🇦 FIFA World Cup 2026
+</footer>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────
+let GEMINI_KEY='', PLAYER_NAME='';
+let matches=[], allMatchesData=[];
+let currentMatchIndex=0, youPts=0, oraclePts=0;
+let history=[], oraclePrediction=null;
+let homeScore=1, awayScore=0;
+let countdownInterval=null;
+const MATCHES_PER_SESSION=5;
+const LS_KEY='bto_predictions_v1';
+
+// ── LocalStorage helpers ──────────────────────────────────────────────────
+function loadSaved(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch{return {};}}
+function savePrediction(matchId,data){
+  const all=loadSaved();all[matchId]=data;
+  try{localStorage.setItem(LS_KEY,JSON.stringify(all));}catch{}
+}
+function getSaved(matchId){return loadSaved()[matchId]||null;}
+
+// ── Daily Challenge helpers ───────────────────────────────────────────────
+const WC_START = new Date('2026-06-11T00:00:00Z'); // World Cup 2026 kick-off date
+
+function getTodayKey(){
+  const d=new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function getDayNumber(){
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const start=new Date(WC_START);start.setHours(0,0,0,0);
+  return Math.max(1,Math.floor((today-start)/(1000*60*60*24))+1);
+}
+
+// Seeded PRNG — same seed → same shuffle → same 5 matches for everyone today
+function seededRng(seed){
+  let s=seed>>>0;
+  return ()=>{s^=s<<13;s^=s>>17;s^=s<<5;return(s>>>0)/4294967296;};
+}
+
+function getDailyMatches(pool){
+  const key=getTodayKey().replace(/-/g,'');
+  const rng=seededRng(parseInt(key));
+  const shuffled=[...pool].sort(()=>rng()-0.5);
+  return shuffled.slice(0,MATCHES_PER_SESSION);
+}
+
+function getTodayCompletion(){
+  try{return JSON.parse(localStorage.getItem('bto_daily_'+getTodayKey())||'null');}catch{return null;}
+}
+function saveTodayCompletion(data){
+  try{localStorage.setItem('bto_daily_'+getTodayKey(),JSON.stringify(data));}catch{}
+}
+
+function msUntilMidnight(){
+  const now=new Date();
+  const midnight=new Date(now);
+  midnight.setHours(24,0,0,0);
+  return midnight-now;
+}
+
+// ── Countdown helpers ─────────────────────────────────────────────────────
+function formatCountdown(ms){
+  if(ms<=0) return 'Starting now!';
+  const h=Math.floor(ms/3600000);
+  const m=Math.floor((ms%3600000)/60000);
+  const s=Math.floor((ms%60000)/1000);
+  if(h>0) return `${h}h ${m}m`;
+  if(m>0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+function startCountdown(matchDate,elId){
+  if(countdownInterval) clearInterval(countdownInterval);
+  const el=()=>document.getElementById(elId);
+  const tick=()=>{
+    const e=el();if(!e){clearInterval(countdownInterval);return;}
+    const ms=new Date(matchDate)-Date.now();
+    e.textContent=formatCountdown(ms);
+    if(ms<=0) clearInterval(countdownInterval);
+  };
+  tick();
+  countdownInterval=setInterval(tick,1000);
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────
+function showSetup(){
+  document.getElementById('turing-intro').style.display='none';
+  document.getElementById('setup').style.display='block';
+}
+
+// ── Flags ─────────────────────────────────────────────────────────────────
+const FLAGS={
+  'Argentina':'🇦🇷','Brazil':'🇧🇷','France':'🇫🇷','Germany':'🇩🇪',
+  'Spain':'🇪🇸','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Portugal':'🇵🇹','Netherlands':'🇳🇱',
+  'Belgium':'🇧🇪','Italy':'🇮🇹','Uruguay':'🇺🇾','Colombia':'🇨🇴',
+  'Mexico':'🇲🇽','United States':'🇺🇸','USA':'🇺🇸','Canada':'🇨🇦',
+  'Japan':'🇯🇵','South Korea':'🇰🇷','Korea Republic':'🇰🇷','Australia':'🇦🇺',
+  'Morocco':'🇲🇦','Senegal':'🇸🇳','Ghana':'🇬🇭','Nigeria':'🇳🇬','Cameroon':'🇨🇲',
+  'Saudi Arabia':'🇸🇦','Iran':'🇮🇷','Qatar':'🇶🇦','Ecuador':'🇪🇨',
+  'Switzerland':'🇨🇭','Croatia':'🇭🇷','Denmark':'🇩🇰','Poland':'🇵🇱',
+  'Serbia':'🇷🇸','Tunisia':'🇹🇳','Costa Rica':'🇨🇷','Chile':'🇨🇱',
+  'New Zealand':'🇳🇿','Panama':'🇵🇦','Honduras':'🇭🇳','Jamaica':'🇯🇲',
+  'Slovakia':'🇸🇰','Ukraine':'🇺🇦','Turkey':'🇹🇷','Türkiye':'🇹🇷',
+  'Austria':'🇦🇹','Romania':'🇷🇴','Paraguay':'🇵🇾','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+  'Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Algeria':'🇩🇿','Egypt':'🇪🇬','Mali':'🇲🇱',
+  "Côte d'Ivoire":'🇨🇮','Venezuela':'🇻🇪','Bolivia':'🇧🇴','Peru':'🇵🇪',
+  'El Salvador':'🇸🇻','Haiti':'🇭🇹','Cuba':'🇨🇺','Guatemala':'🇬🇹',
+  'Trinidad and Tobago':'🇹🇹','Indonesia':'🇮🇩','Philippines':'🇵🇭',
+  'China PR':'🇨🇳','China':'🇨🇳','New Caledonia':'🇳🇨',
+};
+const getFlag=n=>FLAGS[n]||'🏳️';
+
+// ── Form helper ───────────────────────────────────────────────────────────
+function getTeamForm(teamName){
+  return allMatchesData
+    .filter(m=>m.status==='FINISHED'&&(m.homeTeam.name===teamName||m.awayTeam.name===teamName))
+    .slice(0,3)
+    .map(m=>{
+      const isHome=m.homeTeam.name===teamName;
+      const opp=isHome?m.awayTeam.name:m.homeTeam.name;
+      const tf=isHome?m.score.fullTime.home:m.score.fullTime.away;
+      const of=isHome?m.score.fullTime.away:m.score.fullTime.home;
+      const r=tf>of?'W':tf<of?'L':'D';
+      const d=new Date(m.utcDate).toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+      return {r,tf,of,opp,d};
+    });
+}
+
+function renderFormBadges(form){
+  if(!form.length) return `<span class="fbadge none">No WC results yet</span>`;
+  return form.map(f=>`<span class="fbadge ${f.r.toLowerCase()}" title="${f.r} ${f.tf}–${f.of} vs ${f.opp} (${f.d})">${f.r}</span>`).join('');
+}
+
+function formToString(form){
+  if(!form.length) return 'No World Cup 2026 results yet';
+  return form.map(f=>`${f.r} ${f.tf}–${f.of} vs ${f.opp} (${f.d})`).join(' | ');
+}
+
+// ── ESPN fetch ────────────────────────────────────────────────────────────
+async function fetchMatches(){
+  const today=new Date();
+  const offsets=[-1,0,1,2,3,4,5,6];
+  let all=[];
+  for(const o of offsets){
+    const d=new Date(today);d.setDate(d.getDate()+o);
+    const ds=d.toISOString().slice(0,10).replace(/-/g,'');
+    try{
+      const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=${ds}`);
+      if(!r.ok) continue;
+      const data=await r.json();
+      all.push(...(data.events||[]));
+    }catch(_){}
+  }
+  if(!all.length) throw new Error('No World Cup 2026 fixtures found. ESPN API may be temporarily unavailable — please try again.');
+  return all
+    .filter(e=>e.competitions?.[0]?.competitors?.length>=2)
+    .map(e=>{
+      const c=e.competitions[0];
+      const home=c.competitors.find(x=>x.homeAway==='home')||c.competitors[0];
+      const away=c.competitors.find(x=>x.homeAway==='away')||c.competitors[1];
+      const fin=e.status?.type?.completed===true;
+      const live=e.status?.type?.name==='STATUS_IN_PROGRESS';
+      return{
+        id: e.id||`${home.team.displayName}-${away.team.displayName}-${e.date}`,
+        homeTeam:{name:home.team.displayName,logo:home.team.logo||null},
+        awayTeam:{name:away.team.displayName,logo:away.team.logo||null},
+        utcDate:e.date,
+        status:fin?'FINISHED':live?'IN_PLAY':'SCHEDULED',
+        score:{fullTime:{home:fin?parseInt(home.score):null,away:fin?parseInt(away.score):null}},
+      };
+    });
+}
+
+// ── Gemini ────────────────────────────────────────────────────────────────
+async function askGemini(home,away){
+  const hForm=formToString(getTeamForm(home));
+  const aForm=formToString(getTeamForm(away));
+  const prompt=`You are a FIFA World Cup 2026 football analyst. Use the real match data below to predict the score.
+
+Match: ${getFlag(home)} ${home} vs ${getFlag(away)} ${away}
+
+Recent World Cup 2026 results:
+• ${home}: ${hForm}
+• ${away}: ${aForm}
+
+Using this form data plus your knowledge of each team's FIFA ranking, squad depth, tactical style, and World Cup history, predict the final score.
+
+Respond ONLY with this exact JSON (no markdown):
+{"home_score":<number>,"away_score":<number>,"rationale":"<2-3 sentences referencing the form data above>"}`;
+
+  const res=await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+    {method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:350}})}
+  );
+  if(!res.ok){
+    const e=await res.json().catch(()=>({}));
+    throw new Error(e?.error?.message||`Gemini API error ${res.status}`);
+  }
+  const data=await res.json();
+  const raw=data.candidates?.[0]?.content?.parts?.[0]?.text||'{}';
+  return JSON.parse(raw.replace(/```json\n?/gi,'').replace(/```\n?/gi,'').trim());
+}
+
+// ── Scoring ───────────────────────────────────────────────────────────────
+function calcPts([ph,pa],[ah,aa]){
+  if(ph===ah&&pa===aa) return 3;
+  const pw=ph>pa?'h':ph<pa?'a':'d';
+  const aw=ah>aa?'h':ah<aa?'a':'d';
+  return pw===aw?1:0;
+}
+
+// ── Score steppers ────────────────────────────────────────────────────────
+function adjustScore(team,delta){
+  if(team==='home'){homeScore=Math.max(0,Math.min(20,homeScore+delta));document.getElementById('home-val').textContent=homeScore;}
+  else{awayScore=Math.max(0,Math.min(20,awayScore+delta));document.getElementById('away-val').textContent=awayScore;}
+}
+
+// ── Start game ────────────────────────────────────────────────────────────
+async function startGame(){
+  GEMINI_KEY=document.getElementById('gemini-key').value.trim();
+  PLAYER_NAME=document.getElementById('player-name').value.trim()||'You';
+  const err=document.getElementById('error-msg');
+  err.style.display='none';
+  if(!GEMINI_KEY){err.textContent='⚠️ Please enter your Gemini API key.';err.style.display='block';return;}
+  document.getElementById('start-btn').disabled=true;
+  document.getElementById('setup').style.display='none';
+  document.getElementById('loading').style.display='block';
+  try{
+    allMatchesData=await fetchMatches();
+
+    const upcoming = allMatchesData.filter(m=>m.status==='SCHEDULED'||m.status==='IN_PLAY');
+    const finished = allMatchesData.filter(m=>m.status==='FINISHED');
+
+    if(!upcoming.length && !finished.length)
+      throw new Error('No matches found. Please try again shortly.');
+
+    // Use daily seed to shuffle each group independently
+    const seed = parseInt(getTodayKey().replace(/-/g,''));
+    const rng1 = seededRng(seed);
+    const rng2 = seededRng(seed+1);
+    const shuffledFinished = [...finished].sort(()=>rng1()-0.5);
+    const shuffledUpcoming = [...upcoming].sort(()=>rng2()-0.5);
+
+    // Mix: up to 3 finished (score now) + up to 2 upcoming (save for later)
+    const finSlice  = shuffledFinished.slice(0, Math.min(3, shuffledFinished.length));
+    const upSlice   = shuffledUpcoming.slice(0, MATCHES_PER_SESSION - finSlice.length);
+    matches = [...finSlice, ...upSlice].slice(0, MATCHES_PER_SESSION);
+
+    if(!matches.length) throw new Error('No matches found for this period.');
+
+    document.getElementById('loading').style.display='none';
+
+    // Already played today?
+    const todayDone=getTodayCompletion();
+    if(todayDone){showAlreadyPlayed(todayDone);return;}
+
+    document.getElementById('game').style.display='block';
+    document.getElementById('you-name-disp').textContent=PLAYER_NAME;
+    document.getElementById('gc-you-label').textContent=PLAYER_NAME;
+
+    // Show brief intro banner about today's mix
+    const finCount = matches.filter(m=>m.status==='FINISHED').length;
+    const upCount  = matches.filter(m=>m.status==='SCHEDULED'||m.status==='IN_PLAY').length;
+    const introBanner = document.createElement('div');
+    introBanner.id = 'mix-intro';
+    introBanner.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;';
+    introBanner.innerHTML = `
+      <span style="font-size:0.82rem;color:var(--muted);">
+        🎯 <strong style="color:var(--blue)">${finCount} played match${finCount!==1?'es':''}</strong> — predict & score immediately
+      </span>
+      <span style="font-size:0.82rem;color:var(--muted);">
+        ⏳ <strong style="color:var(--gold)">${upCount} upcoming match${upCount!==1?'es':''}</strong> — predict & save for later
+      </span>`;
+    document.getElementById('match-area').before(introBanner);
+
+    renderMatch();
+  }catch(e){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('setup').style.display='block';
+    document.getElementById('start-btn').disabled=false;
+    err.innerHTML=`❌ ${e.message}`;err.style.display='block';
+  }
+}
+
+// ── Render match ──────────────────────────────────────────────────────────
+function renderMatch(){
+  if(currentMatchIndex>=matches.length){showGameOver();return;}
+  if(countdownInterval) clearInterval(countdownInterval);
+  const m=matches[currentMatchIndex];
+
+  // Restore saved prediction if available
+  const saved=getSaved(m.id);
+  homeScore=saved?saved.home:1;
+  awayScore=saved?saved.away:0;
+  oraclePrediction=saved?.oracle||null;
+  const pct=(currentMatchIndex/matches.length)*100;
+  document.getElementById('progress-fill').style.width=pct+'%';
+
+  const home=m.homeTeam.name,away=m.awayTeam.name;
+  const hf=getFlag(home),af=getFlag(away);
+
+  // Show section divider when switching from finished → upcoming
+  const prevMatch = matches[currentMatchIndex-1];
+  const showDivider = currentMatchIndex>0 && prevMatch?.status==='FINISHED' && m.status==='SCHEDULED';
+
+  const hLogo=m.homeTeam.logo,aLogo=m.awayTeam.logo;
+  const fin=m.status==='FINISHED',live=m.status==='IN_PLAY';
+
+  const dateStr=new Date(m.utcDate).toLocaleString('en-CA',{
+    weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'
+  });
+
+  const hForm=getTeamForm(home),aForm=getTeamForm(away);
+  const hBadges=renderFormBadges(hForm),aBadges=renderFormBadges(aForm);
+
+  const homeImg=hLogo?`<img src="${hLogo}" class="team-logo" onerror="this.outerHTML='<div class=\\'team-flag\\'>${hf}</div>'">`:`<div class="team-flag">${hf}</div>`;
+  const awayImg=aLogo?`<img src="${aLogo}" class="team-logo" onerror="this.outerHTML='<div class=\\'team-flag\\'>${af}</div>'">`:`<div class="team-flag">${af}</div>`;
+
+  const dotClass=fin?'finished':live?'live':'';
+  const statusLabel=fin?'Played':live?'LIVE':'Upcoming';
+
+  const matchHTML=`
+    ${showDivider?`
+      <div style="text-align:center;margin:0 0 16px;padding:12px;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:12px;">
+        <p style="font-size:0.78rem;font-weight:700;color:var(--gold);">⬇️ Now predicting upcoming matches</p>
+        <p style="font-size:0.72rem;color:var(--muted);margin-top:3px;">These are saved — come back after kick-off to see if you beat the Oracle!</p>
+      </div>`:''}
+    <div class="match-card">
+      <div class="match-header">
+        <div class="match-badge">
+          <div class="status-dot ${dotClass}"></div>
+          ${statusLabel} · ⚽ Daily Challenge #${getDayNumber()} · ${dateStr}
+        </div>
+        <div class="match-num">${currentMatchIndex+1}/${matches.length}</div>
+      </div>
+
+      ${fin?`
+        <div class="played-note" style="color:var(--blue);border-color:rgba(79,142,247,0.3);background:rgba(79,142,247,0.06);">
+          <strong>🎯 Score Now</strong> — This match is finished. Predict blind, then the real result is revealed immediately!
+        </div>`:''}
+      ${live?`
+        <div class="played-note" style="color:var(--green);border-color:rgba(16,217,160,0.3);background:rgba(16,217,160,0.05);">
+          <strong>🟢 LIVE</strong> — Match in progress! Predict the final score.
+        </div>`:''}
+      ${(!fin&&!live)?`
+        <div class="played-note">
+          <strong>⏳ Predict &amp; Save</strong> — This match hasn't started. Your prediction is locked in and scored after kick-off.
+        </div>
+        <div class="kickoff-countdown"><span class="cd-label">⏱ Kick-off in</span><span class="cd-time" id="cd-timer">...</span></div>`
+      :''}
+
+      <div class="teams-area">
+        <div class="team-side home">
+          ${homeImg}
+          <div class="team-name">${home}</div>
+          <div class="team-role">Home</div>
+          <div class="form-badges">${hBadges}</div>
+        </div>
+        <div class="vs-col">
+          <div class="vs-text">VS</div>
+        </div>
+        <div class="team-side away">
+          ${awayImg}
+          <div class="team-name">${away}</div>
+          <div class="team-role">Away</div>
+          <div class="form-badges">${aBadges}</div>
+        </div>
+      </div>
+
+      <div class="predict-section">
+        <p class="predict-label">🎯 Your Score Prediction</p>
+        ${saved&&!fin?`<div style="text-align:center;margin-bottom:10px;"><span class="locked-pill">🔒 Prediction saved — you can still edit until kick-off</span></div>`:''}
+        <div class="steppers" id="steppers-wrap" style="${fin||live?'opacity:0.4;pointer-events:none;':''}" >
+          <div class="stepper">
+            <button class="step-btn" onclick="adjustScore('home',-1)">−</button>
+            <div class="step-val" id="home-val">${homeScore}</div>
+            <button class="step-btn" onclick="adjustScore('home',1)">+</button>
+          </div>
+          <div class="step-dash">—</div>
+          <div class="stepper">
+            <button class="step-btn" onclick="adjustScore('away',-1)">−</button>
+            <div class="step-val" id="away-val">${awayScore}</div>
+            <button class="step-btn" onclick="adjustScore('away',1)">+</button>
+          </div>
+        </div>
+        <button class="btn-lock" id="lock-btn" onclick="submitPrediction()" ${fin||live?'disabled':''}>
+          ${saved&&!fin?'🔄 Update Prediction':'🔮 Lock In &amp; Ask Oracle'}
+        </button>
+        ${fin||live?`<p style="text-align:center;font-size:0.75rem;color:var(--muted);margin-top:10px;">⛔ Predictions are locked once a match starts</p>`:''}
+      </div>
+
+      <div class="oracle-scan" id="oracle-scan">
+        <div class="scan-ring"><div class="scan-icon">🔮</div></div>
+        <p class="scan-text">Oracle is analysing match data...</p>
+        <p class="scan-sub">Consulting World Cup 2026 form & historical records</p>
+      </div>
+
+      <div class="result-reveal" id="result-reveal"></div>
+    </div>
+  `;
+  document.getElementById('match-area').innerHTML=matchHTML;
+  afterRender();
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────
+async function submitPrediction(){
+  const m=matches[currentMatchIndex];
+  const isEdit=!!getSaved(m.id);
+
+  document.getElementById('lock-btn').disabled=true;
+  document.getElementById('oracle-scan').style.display='block';
+
+  // Only call Gemini if we don't already have an Oracle prediction
+  if(!oraclePrediction){
+    try{
+      oraclePrediction=await askGemini(m.homeTeam.name,m.awayTeam.name);
+    }catch(e){
+      oraclePrediction={
+        home_score:Math.floor(Math.random()*3),
+        away_score:Math.floor(Math.random()*3),
+        rationale:`Oracle connection disrupted — fell back to instinct! (${e.message})`
+      };
+    }
+  }
+
+  // Save prediction to localStorage (only for non-finished matches)
+  if(m.status==='SCHEDULED'){
+    savePrediction(m.id,{home:homeScore,away:awayScore,oracle:oraclePrediction,savedAt:Date.now()});
+  }
+
+  document.getElementById('oracle-scan').style.display='none';
+  revealResult(isEdit);
+}
+
+// ── Edit prediction (re-enables steppers, keeps Oracle) ───────────────────
+function editPrediction(){
+  const m=matches[currentMatchIndex];
+  document.getElementById('result-reveal').style.display='none';
+  document.getElementById('oracle-scan').style.display='none';
+
+  const wrap=document.getElementById('steppers-wrap');
+  if(wrap){wrap.style.opacity='1';wrap.style.pointerEvents='auto';}
+
+  const lockBtn=document.getElementById('lock-btn');
+  if(lockBtn){lockBtn.disabled=false;lockBtn.textContent='🔄 Update Prediction';}
+
+  // Show saved pill
+  const pill=document.querySelector('.locked-pill');
+  if(!pill){
+    const ps=document.querySelector('.predict-section');
+    const label=ps.querySelector('.predict-label');
+    const pillEl=document.createElement('div');
+    pillEl.style.cssText='text-align:center;margin-bottom:10px;';
+    pillEl.innerHTML='<span class="locked-pill">✏️ Editing — tap Update when done</span>';
+    label.after(pillEl);
+  }else{
+    pill.textContent='✏️ Editing — tap Update when done';
+  }
+}
+
+// ── Reveal ────────────────────────────────────────────────────────────────
+function revealResult(isEdit=false){
+  const m=matches[currentMatchIndex];
+  const home=m.homeTeam.name,away=m.awayTeam.name;
+  const oh=oraclePrediction.home_score,oa=oraclePrediction.away_score;
+  const rationale=oraclePrediction.rationale||'';
+  const fin=m.status==='FINISHED';
+  const ah=m.score.fullTime.home,aa=m.score.fullTime.away;
+
+  let yPts=null,oPts=null,roundHtml='',actualHtml='';
+
+  if(fin){
+    yPts=calcPts([homeScore,awayScore],[ah,aa]);
+    oPts=calcPts([oh,oa],[ah,aa]);
+    youPts+=yPts;oraclePts+=oPts;
+    animateCounter('you-pts',youPts-yPts,youPts);
+    animateCounter('oracle-pts',oraclePts-oPts,oraclePts);
+    updateLeading();
+    actualHtml=`<div class="actual-result"><span style="color:var(--muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:1px;">Actual Result</span><span class="actual-score">${home} ${ah} – ${aa} ${away}</span></div>`;
+    if(yPts>oPts)       roundHtml=`<div class="round-result win">🎉 You beat the Oracle! +${yPts} pts</div>`;
+    else if(oPts>yPts)  roundHtml=`<div class="round-result lose">🔮 Oracle wins this round! +${oPts} pts</div>`;
+    else                roundHtml=`<div class="round-result tie">🤝 Tied! Both +${yPts} pts</div>`;
+  }else{
+    roundHtml=`<div class="round-result pending">⏳ Match not played yet — predictions locked in!</div>`;
+    actualHtml=`<div class="actual-result" style="color:var(--gold)">Check back after the match to see who was right!</div>`;
+  }
+
+  const pLabel=p=>p===null?'—':p===3?'🎯 +3 pts (Exact!)':p===1?'✅ +1 pt (Winner)':'❌ +0 pts';
+
+  const enigmaHtml = (fin && yPts===3) ? `
+    <div class="enigma-banner">
+      <div class="e-title">🔐 Enigma Cracked!</div>
+      <div class="e-sub">Exact score — you found the hidden pattern in the data.<br>Alan Turing would approve. This is what code-breaking feels like.</div>
+    </div>` : '';
+
+  history.push({match:`${home} vs ${away}`,youPred:`${homeScore}–${awayScore}`,oraclePred:`${oh}–${oa}`,yPts,oPts});
+
+  const rev=document.getElementById('result-reveal');
+  rev.style.display='block';
+  rev.innerHTML=`
+    <h3 style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;text-align:center;">📊 Predictions Revealed</h3>
+    ${actualHtml}
+    <div class="pred-grid">
+      <div class="pred-card you">
+        <div class="pred-who">👤 ${PLAYER_NAME}</div>
+        <div class="pred-score">${homeScore} – ${awayScore}</div>
+        <div class="pred-pts">${pLabel(yPts)}</div>
+      </div>
+      <div class="pred-card oracle">
+        <div class="pred-who">🔮 Oracle</div>
+        <div class="pred-score">${oh} – ${oa}</div>
+        <div class="pred-pts">${pLabel(oPts)}</div>
+      </div>
+    </div>
+    ${enigmaHtml}
+    ${roundHtml}
+    ${rationale?`<div class="oracle-reasoning"><strong>🔮 Oracle's reasoning:</strong> ${rationale}</div>`:''}
+    <button class="btn-blue btn" onclick="nextMatch()">
+      ${currentMatchIndex+1<matches.length?'➡️ Next Match':'🏆 See Final Results'}
+    </button>
+    ${(!fin)?`<button class="btn-edit" onclick="editPrediction()">✏️ Change My Prediction</button>`:''}
+  `;
+
+  // History
+  document.getElementById('history-section').style.display='block';
+  document.getElementById('history-list').innerHTML=history.map(h=>`
+    <div class="h-item">
+      <span class="h-match">⚽ ${h.match}</span>
+      <span>
+        <span class="h-you">You: ${h.youPred} (${h.yPts??'?'}pts)</span>
+        &nbsp;·&nbsp;
+        <span class="h-oracle">Oracle: ${h.oraclePred} (${h.oPts??'?'}pts)</span>
+      </span>
+    </div>`).join('');
+}
+
+// ── Post-render setup ─────────────────────────────────────────────────────
+function afterRender(){
+  const m=matches[currentMatchIndex];
+  if(m.status==='SCHEDULED') startCountdown(m.utcDate,'cd-timer');
+  // If already saved + scheduled, auto-reveal saved result
+  if(getSaved(m.id)&&m.status==='SCHEDULED'&&oraclePrediction){
+    revealResult(true);
+  }
+}
+
+// ── Next match ────────────────────────────────────────────────────────────
+function nextMatch(){currentMatchIndex++;renderMatch();}
+
+// ── Animated counter ──────────────────────────────────────────────────────
+function animateCounter(id,from,to){
+  const el=document.getElementById(id);
+  const dur=600,steps=20,step=(to-from)/steps;
+  let cur=from,i=0;
+  const t=setInterval(()=>{
+    cur+=step;i++;
+    el.textContent=Math.round(cur);
+    if(i>=steps){el.textContent=to;clearInterval(t);}
+  },dur/steps);
+}
+
+function updateLeading(){
+  const yp=document.getElementById('you-panel');
+  const op=document.getElementById('oracle-panel');
+  yp.classList.toggle('leading',youPts>oraclePts);
+  op.classList.toggle('leading',oraclePts>youPts);
+}
+
+// ── Game over ─────────────────────────────────────────────────────────────
+function showGameOver(){
+  document.getElementById('game').style.display='none';
+  document.getElementById('progress-fill').style.width='100%';
+  const go=document.getElementById('game-over');
+  go.style.display='block';
+  document.getElementById('gc-you-pts').textContent=youPts;
+  document.getElementById('gc-oracle-pts').textContent=oraclePts;
+
+  let emoji,title,verdict;
+  if(youPts>oraclePts){
+    emoji='🏆';title='You Beat the Oracle!';
+    verdict=`You scored ${youPts} pts vs the Oracle's ${oraclePts}. Human intuition triumphs over the algorithm! Turing's Turing Test cuts both ways — today, the human wins. 🎉`;
+    launchConfetti();
+  }else if(oraclePts>youPts){
+    emoji='🤖';title='The Oracle Wins!';
+    verdict=`Gemini AI scored ${oraclePts} pts vs your ${youPts}. The machine has passed its Turing Test — it out-thought a human at football prediction. Turing would be fascinated. 🔮`;
+  }else{
+    emoji='🤝';title='A Perfect Draw!';
+    verdict=`Both scored ${youPts} pts. Human intuition and machine intelligence are perfectly matched. Alan Turing posed this question in 1950 — your game just proved it remains unanswered. ⚖️`;
+  }
+  document.getElementById('go-emoji').textContent=emoji;
+  document.getElementById('go-title').textContent=title;
+  document.getElementById('go-verdict').textContent=verdict;
+
+  // Save completion so they can't replay today
+  saveTodayCompletion({youPts,oraclePts,history,playerName:PLAYER_NAME,completedAt:Date.now()});
+
+  buildShareCard();
+
+  // Show next-challenge countdown on game-over
+  const ms=msUntilMidnight();
+  const hh=Math.floor(ms/3600000),mm=Math.floor((ms%3600000)/60000);
+  const cdEl=document.createElement('p');
+  cdEl.style.cssText='color:var(--muted);font-size:0.82rem;margin-bottom:12px;';
+  cdEl.innerHTML=`⏰ New challenge in <strong style="color:var(--gold)" id="go-countdown">${hh}h ${mm}m</strong>`;
+  document.getElementById('share-card-wrap').before(cdEl);
+  setInterval(()=>{
+    const e=document.getElementById('go-countdown');if(!e)return;
+    const r=msUntilMidnight();
+    const h=Math.floor(r/3600000),m=Math.floor((r%3600000)/60000),s=Math.floor((r%60000)/1000);
+    e.textContent=`${h}h ${m}m ${s}s`;
+  },1000);
+}
+
+// ── Already played today screen ───────────────────────────────────────────
+function showAlreadyPlayed(saved){
+  document.getElementById('game').style.display='none';
+  document.getElementById('game-over').style.display='none';
+  const wrap=document.getElementById('share-card-wrap');
+
+  // Restore state so share card works
+  youPts=saved.youPts; oraclePts=saved.oraclePts;
+  history=saved.history; PLAYER_NAME=saved.playerName||PLAYER_NAME;
+
+  const ms=msUntilMidnight();
+  const hh=Math.floor(ms/3600000),mm=Math.floor((ms%3600000)/60000);
+
+  const el=document.createElement('div');
+  el.style.cssText='max-width:540px;margin:0 auto;padding:32px 16px;text-align:center;position:relative;z-index:1;';
+  el.innerHTML=`
+    <div style="font-size:3.5rem;margin-bottom:12px;">📅</div>
+    <h2 style="font-size:1.8rem;font-weight:900;margin-bottom:8px;">Day #${getDayNumber()} Complete!</h2>
+    <p style="color:var(--muted);margin-bottom:6px;">You already played today's challenge.</p>
+    <p style="color:var(--gold);font-weight:700;font-size:1rem;margin-bottom:24px;">
+      Next challenge in <span id="next-countdown">${hh}h ${mm}m</span>
+    </p>
+    <div id="share-card-wrap-daily"></div>
+    <button class="btn-gold btn" style="margin-top:16px;" onclick="location.reload()">🔄 Check Again</button>
+  `;
+  document.body.insertBefore(el,document.querySelector('footer'));
+
+  // Rebuild share card in this screen
+  buildShareCard('share-card-wrap-daily');
+
+  // Tick the countdown
+  setInterval(()=>{
+    const e=document.getElementById('next-countdown');
+    if(!e) return;
+    const r=msUntilMidnight();
+    const h=Math.floor(r/3600000),m=Math.floor((r%3600000)/60000),s=Math.floor((r%60000)/1000);
+    e.textContent=`${h}h ${m}m ${s}s`;
+  },1000);
+}
+
+// ── Share card ────────────────────────────────────────────────────────────
+function buildShareCard(targetId='share-card-wrap'){
+  const resultIcon = h => h.yPts===3?'🎯':h.yPts===1?'✅':'❌';
+  const oracleIcon = h => h.oPts===3?'🎯':h.oPts===1?'✅':'❌';
+
+  // Visual card HTML
+  const rows = history.map(h=>{
+    const parts = h.match.split(' vs ');
+    const hf = getFlag(parts[0]||''), af = getFlag(parts[1]||'');
+    const pts = h.yPts===null?'':`+${h.yPts}`;
+    return `
+      <div class="share-row">
+        <div class="sr-icon">${resultIcon(h)}</div>
+        <div class="sr-match">${hf} ${parts[0]||''} vs ${af} ${parts[1]||''}</div>
+        <div class="sr-preds">
+          <span class="sr-pred you">${h.youPred}</span>
+          <span style="color:var(--muted);font-size:0.7rem;">vs</span>
+          <span class="sr-pred oracle">${h.oraclePred}</span>
+        </div>
+        <span class="sr-pts">${pts}</span>
+      </div>`;
+  }).join('');
+
+  const verdict = youPts>oraclePts?'🏆 Human wins the Turing Test!':
+                  oraclePts>youPts?'🤖 Oracle passes the Turing Test!':
+                  '🤝 Turing Test: Inconclusive!';
+
+  const dayNum=getDayNumber();
+  const cardHTML = `
+    <div class="share-card">
+      <div class="share-card-header">
+        <div class="sc-title">🔮 Beat the Oracle ⚽ — Day #${dayNum}</div>
+        <div class="sc-sub">FIFA World Cup 2026 🇨🇦 · Powered by Gemini AI · ${new Date().toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'})}</div>
+      </div>
+      <div class="share-rows">${rows}</div>
+      <div class="share-footer">
+        <span><span class="sf-you">👤 ${PLAYER_NAME}: ${youPts}pts</span></span>
+        <span style="color:var(--muted);font-size:0.75rem;">${verdict}</span>
+        <span><span class="sf-oracle">🔮 Oracle: ${oraclePts}pts</span></span>
+      </div>
+    </div>
+    <div class="share-btns">
+      <button class="btn-copy" id="copy-btn" onclick="copyShare()">📋 Copy to Share</button>
+      <a class="btn-x" id="x-share-btn" href="#" target="_blank">𝕏 Post on X</a>
+    </div>`;
+
+  document.getElementById(targetId).innerHTML=cardHTML;
+
+  // Build clipboard text (Wordle-style)
+  const emojiRows = history.map(h=>{
+    const parts=h.match.split(' vs ');
+    const hf=getFlag(parts[0]||''), af=getFlag(parts[1]||'');
+    const ri=resultIcon(h), oi=oracleIcon(h);
+    const enigma=h.yPts===3?' 🔐 Cracked the Enigma!':'';
+    return `${ri} ${hf}${af}  You: ${h.youPred} · Oracle: ${h.oraclePred}${enigma}`;
+  }).join('\n');
+
+  const shareText =
+`🔮 Beat the Oracle ⚽ — Day #${dayNum}
+FIFA World Cup 2026 🇨🇦
+
+${emojiRows}
+
+👤 Me: ${youPts}pts  vs  🔮 Oracle: ${oraclePts}pts
+${verdict}
+
+Can you out-predict Gemini AI? 🧠
+#BeatTheOracle #WorldCup2026 #JuneSolsticeGameJam`;
+
+  // Wire X button
+  const xUrl=`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+  document.getElementById('x-share-btn').href=xUrl;
+
+  // Store share text for copy
+  document.getElementById('copy-btn').dataset.text=shareText;
+}
+
+function copyShare(){
+  const btn=document.getElementById('copy-btn');
+  const text=btn.dataset.text||'';
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Copy to Share';btn.classList.remove('copied');},2500);
+  }).catch(()=>{
+    // Fallback for browsers without clipboard API
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    btn.textContent='✅ Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Copy to Share';btn.classList.remove('copied');},2500);
+  });
+}
+
+// ── Confetti ──────────────────────────────────────────────────────────────
+function launchConfetti(){
+  const canvas=document.getElementById('confetti-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const colors=['#f5a623','#10d9a0','#9b6dff','#fff','#f75f5f','#4f8ef7'];
+  const pieces=Array.from({length:120},()=>({
+    x:Math.random()*canvas.width,y:-10,
+    r:Math.random()*6+4,
+    c:colors[Math.floor(Math.random()*colors.length)],
+    dx:(Math.random()-0.5)*4,dy:Math.random()*4+3,
+    rot:Math.random()*360,drot:(Math.random()-0.5)*8,
+    shape:Math.random()>0.5?'rect':'circle'
+  }));
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-frame/200);
+      if(p.shape==='circle'){ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill();}
+      else{ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);}
+      ctx.restore();
+      p.x+=p.dx;p.y+=p.dy;p.rot+=p.drot;p.dy+=0.05;
+    });
+    frame++;
+    if(frame<220) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
