@@ -1079,7 +1079,7 @@ function renderMatch(){
       <div class="predict-section">
         <p class="predict-label">🎯 Your Score Prediction</p>
         ${saved&&!fin?`<div style="text-align:center;margin-bottom:10px;"><span class="locked-pill">🔒 Prediction saved — you can still edit until kick-off</span></div>`:''}
-        <div class="steppers" id="steppers-wrap" style="${fin||live?'opacity:0.4;pointer-events:none;':''}" >
+        <div class="steppers" id="steppers-wrap" style="${live?'opacity:0.4;pointer-events:none;':''}" >
           <div class="stepper">
             <button class="step-btn" onclick="adjustScore('home',-1)">−</button>
             <div class="step-val" id="home-val">${homeScore}</div>
@@ -1092,10 +1092,10 @@ function renderMatch(){
             <button class="step-btn" onclick="adjustScore('away',1)">+</button>
           </div>
         </div>
-        <button class="btn-lock" id="lock-btn" onclick="submitPrediction()" ${fin||live?'disabled':''}>
-          ${saved&&!fin?'🔄 Update Prediction':'🔮 Lock In &amp; Ask Oracle'}
+        <button class="btn-lock" id="lock-btn" onclick="submitPrediction()" ${live?'disabled':''}>
+          ${fin?'🎯 Predict &amp; Reveal Result':'🔮 Lock In &amp; Ask Oracle'}
         </button>
-        ${fin||live?`<p style="text-align:center;font-size:0.75rem;color:var(--muted);margin-top:10px;">⛔ Predictions are locked once a match starts</p>`:''}
+        ${live?`<p style="text-align:center;font-size:0.75rem;color:var(--muted);margin-top:10px;">⛔ Match is live — predictions are locked</p>`:''}
       </div>
 
       <div class="oracle-scan" id="oracle-scan">
