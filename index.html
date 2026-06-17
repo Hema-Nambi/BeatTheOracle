@@ -1151,13 +1151,13 @@ async function submitPrediction(){
   // Only call Gemini if we don't already have an Oracle prediction
   if(!oraclePrediction){
     try{
-      oraclePrediction=await askGemini(m.homeTeam.name,m.awayTeam.name);
+     oraclePrediction=await askGemini(m.homeTeam.name,m.awayTeam.name,'gemini-2.0-flash');
     }catch(e){
-      oraclePrediction={
-        home_score:Math.floor(Math.random()*3),
-        away_score:Math.floor(Math.random()*3),
-        rationale:`Oracle connection disrupted — fell back to instinct! (${e.message})`
-      };
+     oraclePrediction={
+      home_score:Math.floor(Math.random()*3),
+      away_score:Math.floor(Math.random()*3),
+      rationale:`The Oracle's circuits flickered and it went with a gut call. 🔮`
+    };
     }
   }
 
