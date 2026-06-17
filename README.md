@@ -4,7 +4,7 @@
 
 A daily prediction duel where you go head-to-head against an AI Oracle — powered by Google Gemini 1.5 Flash — to predict FIFA World Cup 2026 match scores. Beat the Oracle and you win the **Turing Test**. Lose, and the machines have won... for today.
 
-🎮 **[Play now →](https://Hema-Nambi.github.io/beat-the-oracle)**
+🎮 **[Play now →](https://hema-nambi.github.io/beat-the-oracle)**
 
 ---
 
